@@ -18,10 +18,6 @@ genOutcome.default <- function(Data) {
   linear <- Data$linear
   ydist  <- Data$ydist
 
-  Data$omega0 <- Data$omega
-  Data$tau00 <- Data$tau0
-  Data$tau10 <- Data$tau1
-
   omega  <- Data$omega # round(runif(nfac, 0.1, 0.3),3)
   tau0   <- Data$tau0  # round(runif(1, 0.2, 0.4),3)
   tau1   <- Data$tau1  # round(runif(nfac, -0.2, -0.1),3)
@@ -49,30 +45,12 @@ genOutcome.default <- function(Data) {
     1*x1 +
     0.5*x2
 
-  if(!linear) {
-    Y <- Y + 0.5*x1sq
-  }
-
   exp_var  <- var(Y)
   unex_var <- (1 - Y.R2)*exp_var / Y.R2
   Y <- Y + MASS::mvrnorm(N, 0, sqrt(unex_var), empirical = T)
 
-  if(ydist == "t") {
-    trunc_point <- quantile(Y, c(.1, .9))
-
-    Y[Y < trunc_point[1]] <- trunc_point[1]
-    Y[Y > trunc_point[2]] <- trunc_point[2]
-
-  } else if(ydist == "t3") {
-
-    Y <- Y + rq(N, 3)
-  }
-
   Y <- Y - mean(Y)
 
-  Data$omega <- omega
-  Data$tau0 <- tau0
-  Data$tau1 <- tau1
 
   Data$stan_dt <- list(
     # data info
@@ -86,7 +64,6 @@ genOutcome.default <- function(Data) {
     # index
     studentM     = studentM,
     section      = section,
-    lambda_prior = obv_lambda(obs.v.partial = lv.resp[1:(N/2), ], a_idx),
     factoridx    = a_idx,
     firstitem    = fi_idx,
     # data

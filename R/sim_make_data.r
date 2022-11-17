@@ -40,8 +40,6 @@ makeDat <- function(N,R2Y,R2eta,omega,tau0,tau1,lambda,nsec,lvmodel){
   # set up S3 class
   sim_info <- structure(eval(mc), class = tolower(lvmodel))
 
-  sim_info$linear <- T
-  sim_info$ydist <- 'n'
   sim_info$nfac <- 1
 
   # Generate Latent Variable Model Information
