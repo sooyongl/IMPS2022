@@ -44,7 +44,6 @@ genIRTpar <- function(nitem=25, nfac=1, lvmodel, ncat = 4) {
     if(lvmodel == "grm") {
       diffs <- t(apply(matrix(runif(nitem * (ncat-1), 0.5, 1), nitem), 1, cumsum))
       d <- -(diffs - rowMeans(diffs))
-      d <- -1*d
     }
 
     colnames(d) <- paste0("d",1:ncol(d))

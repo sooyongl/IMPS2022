@@ -376,6 +376,8 @@ model{
 // last line
 "
 
+stan_code <- mk_stanmodel(lvmodel = "grm")
+
 fit <- rstan::stan(model_code = stan_code, data = sdat$stan_dt,
                    chains = 1)
 
