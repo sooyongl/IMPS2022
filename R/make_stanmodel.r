@@ -3,6 +3,7 @@
 mk_stanmodel <- function(lvmodel = c("2pl","grm","gpcm")) {
 
   lvmodel　<- tolower(lvmodel)
+  lvmodel  <- match.arg(lvmodel)
 
   if(lvmodel == "2pl") {
     stanmodel <- "data{

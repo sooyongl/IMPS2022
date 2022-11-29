@@ -36,8 +36,8 @@ sdat <- makeDat(
 ## Run Stan for FLPS
 
 ``` r
-# You can load the raw stan script from the package
-stan_model <- mk_stanmodel("2pl")
+# You can load the raw stan script corresponding to the type of measurement models from the package
+stan_model <- mk_stanmodel("2pl") # "2pl", "grm", "gpcm" available
 
 # Run stan based on the generated data and the FLPS stan script
 fit <- rstan::stan(model_code = stan_code, data = sdat$stan_dt)
